@@ -6,7 +6,7 @@ Containerized image for Jagrosh's MusicBot based on [distroless](https://github.
 ## Run
 ### CLI
 ```bash
-docker run -v /path_to_config_folder:/app/config -d --restart=unless-stopped --name=jmusicbot  cwlu2001/jmusicbot
+docker run -v /path_to_config_folder:/app/config -d --restart=unless-stopped --name=jmusicbot cwlu2001/jmusicbot
 ```
 
 ### Docker compose (recommend)
@@ -21,12 +21,12 @@ services:
      - ./config:/app/config
 ```
 
-## Folder structure
+## Folder structure in container image
 ```
 app
  ├── config
  │   ├── config.txt
- │   └── serversettings.txt
+ │   └── serversettings.json
  └── JMusicBot.jar
 ```
 
