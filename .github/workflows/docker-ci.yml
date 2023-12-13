@@ -67,6 +67,7 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
+          provenance: false
           tags: ${{ steps.meta.outputs.tags }}
           build-args: |
             DL_URL=${{ needs.get_metadata.outputs.dl_url }}
