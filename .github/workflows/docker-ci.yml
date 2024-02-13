@@ -29,10 +29,9 @@ jobs:
       - name: Get metadata
         id: get_metadata
         run: |
-          RESPONSE=$(curl -s https://api.github.com/repos/Sartharon/MusicBot/releases/latest | jq -r '.tag_name, .assets[0].browser_download_url')
-          echo "TAG=$(echo "$RESPONSE" | head -n 1)" >> $GITHUB_OUTPUT
-          echo "DL_URL=$(echo "$RESPONSE" | tail -n 1)" >> $GITHUB_OUTPUT
-
+          curl -s https://api.github.com/repos/jagrosh/MusicBot/releases/latest > response
+          printf 'TAG=%s' "$(cat response | jq -r '.tag_name')" >> $GITHUB_OUTPUT
+          printf 'DL_URL=%s' "$(cat response | jq -r '.assets[0].browser_download_url')" >> $GITHUB_OUTPUT
   build:
     runs-on: ubuntu-22.04
     needs: ["check", "get_metadata"]
@@ -53,7 +52,7 @@ jobs:
           images: ${{ secrets.DOCKER_USERNAME }}/jmusicbot
           tags: |
             latest,enable=${{ github.ref_name == 'master' }}
-            github.ref_name,enable=${{ github.ref_name != 'master' }}
+            ${{ github.ref_name }},enable=${{ github.ref_name != 'master' }}
             ${{ needs.get_metadata.outputs.tag }},enable=${{ github.ref_name == 'master' }}
 
       - name: Login to Docker Hub
