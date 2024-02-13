@@ -52,7 +52,7 @@ jobs:
           images: ${{ secrets.DOCKER_USERNAME }}/jmusicbot
           tags: |
             latest,enable=${{ github.ref_name == 'master' }}
-            github.ref_name,enable=${{ github.ref_name != 'master' }}
+            ${{ github.ref_name }},enable=${{ github.ref_name != 'master' }}
             ${{ needs.get_metadata.outputs.tag }},enable=${{ github.ref_name == 'master' }}
 
       - name: Login to Docker Hub
