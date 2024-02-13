@@ -30,8 +30,8 @@ jobs:
         id: get_metadata
         run: |
           curl -s https://api.github.com/repos/jagrosh/MusicBot/releases/latest > response
-          printf 'TAG=%s' "$(cat response | jq -r '.tag_name')" >> $GITHUB_OUTPUT
-          printf 'DL_URL=%s' "$(cat response | jq -r '.assets[0].browser_download_url')" >> $GITHUB_OUTPUT
+          printf 'TAG=%s\n' "$(cat response | jq -r '.tag_name')" >> $GITHUB_OUTPUT
+          printf 'DL_URL=%s\n' "$(cat response | jq -r '.assets[0].browser_download_url')" >> $GITHUB_OUTPUT
   build:
     runs-on: ubuntu-22.04
     needs: ["check", "get_metadata"]
