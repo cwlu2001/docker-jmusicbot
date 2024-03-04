@@ -2,25 +2,12 @@ name: Docker CI
 
 on:
   workflow_dispatch:
-#  schedule:
-#    - cron:  '33 3 * * 3'
+  schedule:
+    - cron:  '33 3 * * 3'
 
 jobs:
-  check:
-    runs-on: ubuntu-22.04
-    outputs:
-      is_update: ${{ steps.check_ver.outputs.is_update }}
-    steps:
-      - name: Check update
-        id: check_update
-        uses: mogeko/latest-version@v1.1.2
-        with:
-          repo: jagrosh/MusicBot
-
   get_metadata:
     runs-on: ubuntu-22.04
-    needs: check
-    if: ${{ needs.check.outputs.is_update == 'true' }} || ${{ github.event_name == 'workflow_dispatch' }}
     outputs:
       tag: ${{ steps.get_metadata.outputs.TAG }}
       dl_url: ${{ steps.get_metadata.outputs.DL_URL }}
@@ -30,12 +17,12 @@ jobs:
         id: get_metadata
         run: |
           curl -s https://api.github.com/repos/jagrosh/MusicBot/releases/latest > response
-          printf 'TAG=%s\n' "$(cat response | jq -r '.tag_name')" >> $GITHUB_OUTPUT
-          printf 'DL_URL=%s\n' "$(cat response | jq -r '.assets[0].browser_download_url')" >> $GITHUB_OUTPUT
+          TAG=$(cat response | jq -r '.tag_name')
+          DL_URL=$(cat response | jq -r '.assets[0].browser_download_url')
+          echo TAG=$TAG >> $GITHUB_OUTPUT
+          echo DL_URL=$DL_URL >> $GITHUB_OUTPUT
   build:
     runs-on: ubuntu-22.04
-    needs: ["check", "get_metadata"]
-    if: ${{ needs.check.outputs.is_update == 'true' }} || ${{ github.event_name == 'workflow_dispatch' }}
     steps:
       - uses: actions/checkout@v4.1.1
 
@@ -43,11 +30,11 @@ jobs:
         uses: docker/setup-qemu-action@v3.0.0
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3.0.0
+        uses: docker/setup-buildx-action@v3.1.0
 
       - name: Set up Docker metadata
         id: meta
-        uses: docker/metadata-action@v5.0.0
+        uses: docker/metadata-action@v5.5.1
         with:
           images: ${{ secrets.DOCKER_USERNAME }}/jmusicbot
           tags: |
@@ -69,11 +56,12 @@ jobs:
           push: true
           provenance: false
           tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             DL_URL=${{ needs.get_metadata.outputs.dl_url }}
 
       - name: Update Docker Hub README
-        uses: peter-evans/dockerhub-description@v3.4.2
+        uses: peter-evans/dockerhub-description@v4.0.0
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
