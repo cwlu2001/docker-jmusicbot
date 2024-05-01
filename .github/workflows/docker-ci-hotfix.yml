@@ -2,11 +2,22 @@ name: Docker CI - hotfix
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron:  '33 3 * * 2'
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
+      - name: Get metadata
+        id: get_metadata
+        run: |
+          curl -s https://api.github.com/repos/MichailiK/MusicBot/releases/latest > response
+          TAG=$(cat response | jq -r '.tag_name')
+          DL_URL=$(cat response | jq -r '.assets[0].browser_download_url')
+          echo TAG=$TAG >> $GITHUB_OUTPUT
+          echo DL_URL=$DL_URL >> $GITHUB_OUTPUT
+
       - uses: actions/checkout@v4.1.1
 
       - name: Set up QEMU
@@ -41,7 +52,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            DL_URL=https://github.com/Steanky/MusicBot/releases/download/0.4.1/JMusicBotUnlocked-0.4.1.jar
+            DL_URL=${{ steps.get_metadata.outputs.dl_url }}
 
       - name: Update Docker Hub README
         uses: peter-evans/dockerhub-description@v4.0.0

@@ -23,7 +23,7 @@ services:
 
 ## Tags
 Since JMusicBot [0.3.9](https://github.com/jagrosh/MusicBot/releases/tag/0.3.9)
-+ **0.4.0-hotfix** uses [Steanky's fork](https://github.com/Steanky/MusicBot/releases/tag/0.4.1) to resolve youtube playback issue
++ **0.4.0-hotfix** uses [MichailiK's fork](https://github.com/MichailiK/MusicBot/releases) to resolve youtube playback issue
 
 ## Folder structure in container image
 ```
