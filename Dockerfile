@@ -4,6 +4,6 @@ ADD --chmod=555 ${DL_URL} /app/JMusicBot.jar
 
 FROM scratch
 COPY --from=pre-image / /
-USER nonroot:nonroot
+USER 1000:1000
 WORKDIR /app/config
 ENTRYPOINT [ "java", "-Dnogui=true", "-Dconfig=/app/config/config.txt", "-jar", "/app/JMusicBot.jar"]
