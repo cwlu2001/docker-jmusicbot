@@ -31,15 +31,16 @@ Since JMusicBot [0.3.9](https://github.com/jagrosh/MusicBot/releases/tag/0.3.9)
 
 ## Folder Tree
 ```
-app
-├── config
-│   ├── config.txt
-│   └── serversettings.json
-└── JMusicBot.jar
+/app
+├── JMusicBot.jar
+└── config
+    ├── config.txt
+    └── serversettings.json
 ```
 
 ---
 + [JMusicBot](https://github.com/jagrosh/MusicBot)
 + [Setup Guide](https://jmusicbot.com/)
++ [YouTube OAuth2 Setup Guide](https://github.com/jagrosh/MusicBot/blob/yt-oauth2-docs/docs/youtube-oauth2.md)
 + [Container Source](https://github.com/cwlu2001/docker-jmusicbot)
 + [Build Workflow](https://github.com/cwlu2001/docker-build/actions/workflows/jmusicbot.yml)
