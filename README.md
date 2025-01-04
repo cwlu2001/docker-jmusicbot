@@ -7,6 +7,21 @@
 
 
 ## Run
+
+### Docker Compose (devbuild)
+docker-compose.yaml
+```yaml
+services:
+  jmusicbot:
+    image: cwlu2001/jmusicbot:latest-dev
+    container_name: jmusicbot
+    restart: unless-stopped
+    volumes:
+      - ./config:/app/config
+```
+
+---
+
 ### CLI
 ```bash
 docker run -v /path_to_config_folder:/app/config -d --restart=unless-stopped --name=jmusicbot cwlu2001/jmusicbot:latest
