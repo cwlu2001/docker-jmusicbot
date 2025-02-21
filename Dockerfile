@@ -1,18 +1,17 @@
-FROM eclipse-temurin:11-jre
-ARG DL_URL
-ADD --chmod=755 ${DL_URL} /app/JMusicBot.jar
-COPY --chmod=755 entrypoint.sh /entrypoint.sh
-RUN \
-    apt update && \
-    apt install -y --no-install-recommends \
+FROM eclipse-temurin:21-jre-alpine
+RUN addgroup -g 1000 user && \
+    adduser -D -u 1000 -G user user && \
+    mkdir /app && \
+    chown user:user /app && \
+    apk add --no-cache \
         bash \
         chromium \
-        chromium-chromedriver && \
-    apt clean && \
-    rm -rf \
-        /var/lib/apt/lists/* \
-        /tmp/* \
-        /usr/share/doc \
-        /usr/share/man
+        chromium-chromedriver
+
+USER user:user
+ARG JMB=https://github.com/cwlu2001/MusicBot/releases/download/0.4.4-dev.5/JMusicBot-0.4.4-dev.5.jar
+ADD --chmod=755 ${JMB} /app/JMusicBot.jar
+COPY --chmod=755 entrypoint.sh /entrypoint.sh
+ENV CHROMIUM_USER_FLAGS=--no-sandbox
 WORKDIR /app/config
 ENTRYPOINT [ "/entrypoint.sh" ]
