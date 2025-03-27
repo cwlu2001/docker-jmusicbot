@@ -41,7 +41,8 @@ services:
 
 ## Tags
 Since JMusicBot [0.3.9](https://github.com/jagrosh/MusicBot/releases/tag/0.3.9)
-+ `latest-dev`, `0.4.4-dev.5`, `0.4.4-dev.4` uses [my fork](https://github.com/cwlu2001/MusicBot/tree/fix-youtube), with automatic retrieval of PO token implemented by MichailiK
++ `latest-dev`, `0.4.4-dev.6` with updated yt source manager to solve playback issue in previous tags
++ `0.4.4-dev.5`, `0.4.4-dev.4` uses [my fork](https://github.com/cwlu2001/MusicBot/tree/fix-youtube), with automatic retrieval of PO token implemented by MichailiK
 + `0.4.4-dev.2`, `0.4.4-dev.3` uses [my fork](https://github.com/cwlu2001/MusicBot/tree/fix-youtube), with YT Proof of Origin (PO) token implemented by MichailiK
 + `0.4.4-dev.1` with YouTube OAuth2 implementation by MichailiK ( Patched by YT, not working)
 + `0.4.0-hotfix` uses [MichailiK's fork](https://github.com/MichailiK/MusicBot/releases) to solve youtube playback issue
