@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21-jre-alpine
+FROM eclipse-temurin:11-jre-alpine-3.21
 RUN addgroup -g 1000 user && \
     adduser -D -u 1000 -G user user && \
     mkdir /app && \
@@ -9,7 +9,7 @@ RUN addgroup -g 1000 user && \
         chromium-chromedriver
 
 USER user:user
-ARG JMB=https://github.com/cwlu2001/MusicBot/releases/download/0.4.4-dev.5/JMusicBot-0.4.4-dev.5.jar
+ARG JMB=https://github.com/cwlu2001/MusicBot/releases/download/0.4.4-dev.9/JMusicBot-0.4.4-dev.9.jar
 ADD --chmod=755 ${JMB} /app/JMusicBot.jar
 COPY --chmod=755 entrypoint.sh /entrypoint.sh
 ENV CHROMIUM_USER_FLAGS=--no-sandbox
