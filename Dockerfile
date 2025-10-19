@@ -1,4 +1,4 @@
-FROM eclipse-temurin:11-jre-alpine-3.21
+FROM eclipse-temurin:21-jre-alpine-3.21
 RUN addgroup -g 1000 user && \
     adduser -D -u 1000 -G user user && \
     mkdir /app && \
