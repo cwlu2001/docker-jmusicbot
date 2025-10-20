@@ -8,8 +8,7 @@
 
 ## Run
 
-### Docker Compose (devbuild)
-docker-compose.yaml
+### Docker Compose
 ```yaml
 services:
   jmusicbot:
@@ -20,8 +19,13 @@ services:
       - ./config:/app/config
 ```
 
----
+### CLI
+```bash
+docker run -v /path_to_config_folder:/app/config -d --restart=unless-stopped --name=jmusicbot cwlu2001/jmusicbot:latest-dev
+```
 
+---
+<!---
 ### CLI
 ```bash
 docker run -v /path_to_config_folder:/app/config -d --restart=unless-stopped --name=jmusicbot cwlu2001/jmusicbot:latest
@@ -38,6 +42,7 @@ services:
     volumes:
       - ./config:/app/config
 ```
+--->
 
 ## Tags
 Since JMusicBot [0.3.9](https://github.com/jagrosh/MusicBot/releases/tag/0.3.9)
@@ -57,12 +62,14 @@ Since JMusicBot [0.3.9](https://github.com/jagrosh/MusicBot/releases/tag/0.3.9)
 + `0.4.0-hotfix` uses [MichailiK's fork](https://github.com/MichailiK/MusicBot/releases) to solve youtube playback issue
 
 
+<!---
 ## Get PO Token Manually (`0.4.4-dev.2`, `0.4.4-dev.3`)
 According to [#1772](https://github.com/jagrosh/MusicBot/pull/1772)
 1. Run the script: `docker run quay.io/invidious/youtube-trusted-session-generator`
 2. Copy generated `po_token`, `visitor_data` into your `config.txt`
 
 [Example config](https://github.com/MichailiK/MusicBot/blob/7be02b1/src/main/resources/reference.conf#L206-L207)
+--->
 
 
 ## Folder Tree
